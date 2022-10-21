@@ -1,0 +1,1 @@
+add_library(add foo.cpp)
