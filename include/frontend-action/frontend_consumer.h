@@ -7,6 +7,8 @@
 
 class frontend_consumer : public clang::ASTConsumer {
 public:
+    explicit frontend_consumer(clang::Rewriter &rewriter) : rewriter(rewriter), Visitor(rewriter) {}
+
     virtual void HandleTranslationUnit(clang::ASTContext &Context) {
         // Traversing the translation unit decl via a RecursiveASTVisitor
         // will visit all nodes in the AST.
@@ -14,6 +16,7 @@ public:
     }
 private:
     // A RecursiveASTVisitor implementation.
+    clang::Rewriter &rewriter;
     frontend_visitor Visitor;
 };
 
