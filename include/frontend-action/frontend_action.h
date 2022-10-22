@@ -9,7 +9,7 @@
 class frontend_action : public clang::ASTFrontendAction {
         public:
 
-            virtual std::unique_ptr<clang::ASTConsumer> frontend_action::CreateASTConsumer(
+            virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
                     clang::CompilerInstance &CI, llvm::StringRef InFile) {
                 llvm::errs() << "** Creating AST consumer for: " << InFile << "\n";
                 rewriter.setSourceMgr(CI.getSourceManager(), CI.getLangOpts());
