@@ -14,6 +14,7 @@ public:
         // For debugging, dumping the AST nodes will show which nodes are already
         // being visited.
         Declaration->dump();
+        rewriter.ReplaceText(Declaration->getBeginLoc(), "ASD();");
 
         // The return value indicates whether we want the visitation to proceed.
         // Return false to stop the traversal of the AST.
