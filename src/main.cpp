@@ -1,5 +1,5 @@
 #include <clang/Tooling/Tooling.h>
-#include <frontend-action/frontend_action.h>
+#include <goal-injector/frontend_action.h>
 #include <memory>
 
 int main(int argc, char **argv) {

@@ -6,6 +6,12 @@
 #include <clang/Rewrite/Core/Rewriter.h>
 #include "frontend_consumer.h"
 
+/*
+ * This is just the entry point for a Library/Plugin/etc.
+ *
+ * If you are looking for the instrumentation, go to frontend_visitor
+ */
+
 class frontend_action : public clang::ASTFrontendAction {
         public:
 
@@ -13,7 +19,6 @@ class frontend_action : public clang::ASTFrontendAction {
                     clang::CompilerInstance &CI, llvm::StringRef InFile) {
                 llvm::errs() << "** Creating AST consumer for: " << InFile << "\n";
                 rewriter.setSourceMgr(CI.getSourceManager(), CI.getLangOpts());
-                //return llvm::make_unique<MyASTConsumer>(TheRewriter,&CI.getASTContext());
                 return std::make_unique<frontend_consumer>(rewriter);}
 
     void EndSourceFileAction() override {

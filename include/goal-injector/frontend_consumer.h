@@ -5,18 +5,23 @@
 #include <clang/AST/ASTConsumer.h>
 #include "frontend_visitor.h"
 
+/*
+ * This is just a top-level of how a translation unit should be traversed.
+ *
+ * If you are looking for the instrumentation, go to frontend_visitor
+ */
+
+
 class frontend_consumer : public clang::ASTConsumer {
 public:
     explicit frontend_consumer(clang::Rewriter &rewriter) : rewriter(rewriter), Visitor(rewriter) {}
 
     virtual void HandleTranslationUnit(clang::ASTContext &Context) {
-        // Traversing the translation unit decl via a RecursiveASTVisitor
-        // will visit all nodes in the AST.
-        Visitor.TraverseDecl(Context.getTranslationUnitDecl());
+        Visitor.TraverseAST(Context);
     }
 private:
-    // A RecursiveASTVisitor implementation.
     clang::Rewriter &rewriter;
+    // A RecursiveASTVisitor implementation.
     frontend_visitor Visitor;
 };
 

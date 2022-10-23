@@ -13,3 +13,16 @@ easier to integrate with ESBMC tools.
  - `include`: Header files
  - `src`: Library files
  - `unit`: Unit tests
+
+# Dependencies
+
+I want to keep the dependencies at a minimum. So far, the required dependencies are:
+
+- LLVM/Clang > 11
+- fmt
+
+Please, avoid adding dependencies. The idea is for this to be used as a library.
+
+# How it works
+
+It basically adds GOAL labels into something

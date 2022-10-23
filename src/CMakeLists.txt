@@ -1,4 +1,4 @@
-add_subdirectory(frontend-action)
+add_subdirectory(goal-injector)
 
 add_executable(instrumentator main.cpp)
 target_include_directories(instrumentator
