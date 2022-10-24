@@ -1,24 +1,29 @@
 #include <goal-injector/frontend_visitor.h>
+#include <memory>
 
 namespace GoalInjector {
     bool frontend_visitor::VisitWhileStmt(clang::WhileStmt *expr) {
-        //rewriter.InsertTextBefore(expr->getBeginLoc(), "ASD();");
-        InjectOnCompoundStmt(static_cast<clang::CompoundStmt *>(expr->getBody()));
-        // The return value indicates whether we want the visitation to proceed.
-        // Return false to stop the traversal of the AST.
+        InjectOnStmt(expr->getBody());
         return true;
     }
 
     void frontend_visitor::InjectOnStmt(clang::Stmt *stmt) {
-        if (static_cast<clang::CompoundStmt *>(stmt)) {
+
+        if (stmt->getStmtClass() == clang::Stmt::CompoundStmtClass) {
             InjectOnCompoundStmt(static_cast<clang::CompoundStmt *>(stmt));
+        } else {
+            InjectOnNonCompoundStmt(stmt);
         }
-        stmt->dump();
-        assert(!"Stmt not supported");
     }
 
     void frontend_visitor::InjectOnCompoundStmt(clang::CompoundStmt *stmt) {
         // TODO: Not sure whether begin or end location is the best
-        rewriter.InsertTextAfter(stmt->getEndLoc(), goal_str);
+        rewriter.InsertTextAfter(stmt->getBeginLoc().getLocWithOffset(1), goal_str);
+    }
+
+    void frontend_visitor::InjectOnNonCompoundStmt(clang::Stmt *stmt) {
+        // TODO: Not sure whether begin or end location is the best
+        rewriter.InsertTextAfter(stmt->getBeginLoc(), goal_block_str);
+        rewriter.InsertTextAfter(stmt->getEndLoc().getLocWithOffset(1), "}");
     }
 }

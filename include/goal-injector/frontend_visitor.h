@@ -32,15 +32,26 @@ namespace GoalInjector {
 
         bool VisitWhileStmt(clang::WhileStmt *expr);
 
+        /*
+         * TODO:
+         *
+         * IF
+         * SwitchCase
+         * FOR
+         * RETURN
+         */
+
     protected:
         void InjectOnStmt(clang::Stmt *stmt);
 
-
         void InjectOnCompoundStmt(clang::CompoundStmt *stmt);
+
+        void InjectOnNonCompoundStmt(clang::Stmt *stmt);
 
     private:
         clang::Rewriter &rewriter;
-        const std::string goal_str = " reach_error(); ";
+        const std::string goal_str = "reach_error();";
+        const std::string goal_block_str = "{reach_error();";
 
     };
 }
