@@ -1,5 +1,4 @@
 #include <goal-injector/frontend_visitor.h>
-#include <memory>
 
 namespace GoalInjector {
     bool frontend_visitor::VisitWhileStmt(clang::WhileStmt *expr) {
@@ -7,7 +6,26 @@ namespace GoalInjector {
         return true;
     }
 
+    bool frontend_visitor::VisitIfStmt(clang::IfStmt *expr) {
+        InjectOnStmt(expr->getThen());
+        InjectOnStmt(expr->getElse());
+        return true;
+    }
+
+    bool frontend_visitor::VisitForStmt(clang::ForStmt *expr) {
+        InjectOnStmt(expr->getBody());
+        return true;
+    }
+
+    bool frontend_visitor::VisitFunctionDecl(clang::FunctionDecl *F) {
+        InjectOnStmt(F->getBody());
+        return true;
+    }
+
+
     void frontend_visitor::InjectOnStmt(clang::Stmt *stmt) {
+        if (!stmt)
+            return;
 
         if (stmt->getStmtClass() == clang::Stmt::CompoundStmtClass) {
             InjectOnCompoundStmt(static_cast<clang::CompoundStmt *>(stmt));

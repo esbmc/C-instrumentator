@@ -32,13 +32,15 @@ namespace GoalInjector {
 
         bool VisitWhileStmt(clang::WhileStmt *expr);
 
+        bool VisitIfStmt(clang::IfStmt *expr);
+
+        bool VisitForStmt(clang::ForStmt *expr);
+
+        bool VisitFunctionDecl(clang::FunctionDecl *F);
+
         /*
-         * TODO:
-         *
-         * IF
          * SwitchCase
-         * FOR
-         * RETURN
+         * dowhile
          */
 
     protected:
