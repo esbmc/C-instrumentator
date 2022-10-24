@@ -4,6 +4,7 @@
 #include <clang/AST/RecursiveASTVisitor.h>
 #include <clang/AST/DeclCXX.h>
 #include <clang/Rewrite/Core/Rewriter.h>
+#include <sstream>
 
 /**
  * This is where the instrumentatoin takes place.
@@ -23,21 +24,24 @@
  * This means that if the body of the interesting expressions are not /CompoundStmt/ we will need to manually create a
  * scope.
  */
+namespace GoalInjector {
+    class frontend_visitor
+            : public clang::RecursiveASTVisitor<frontend_visitor> {
+    public:
+        explicit frontend_visitor(clang::Rewriter &rewriter) : rewriter(rewriter) {}
 
-class frontend_visitor
-: public clang::RecursiveASTVisitor<frontend_visitor> {
-public:
-    explicit frontend_visitor(clang::Rewriter &rewriter) : rewriter(rewriter) {}
+        bool VisitWhileStmt(clang::WhileStmt *expr);
 
-    bool VisitWhileStmt(clang::WhileStmt *expr) {
-        //rewriter.InsertTextBefore(expr->getBeginLoc(), "ASD();");
-        expr->getBody()->dump();
-        // The return value indicates whether we want the visitation to proceed.
-        // Return false to stop the traversal of the AST.
-        return true;
-    }
-private:
-    clang::Rewriter &rewriter;
-};
+    protected:
+        void InjectOnStmt(clang::Stmt *stmt);
 
+
+        void InjectOnCompoundStmt(clang::CompoundStmt *stmt);
+
+    private:
+        clang::Rewriter &rewriter;
+        const std::string goal_str = " reach_error(); ";
+
+    };
+}
 #endif //CINSTRUMENTATION_FRONTEND_VISITOR_H
