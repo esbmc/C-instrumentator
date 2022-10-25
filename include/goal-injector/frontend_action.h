@@ -21,7 +21,7 @@ namespace GoalInjector {
         explicit frontend_action(const std::string file_output, std::string &rewriter_output) : file_output(
                 file_output), rewriter_output(rewriter_output) {}
 
-        virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
+        virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer (
                 clang::CompilerInstance &CI, llvm::StringRef InFile) {
             rewriter.setSourceMgr(CI.getSourceManager(), CI.getLangOpts());
             return std::make_unique<frontend_consumer>(rewriter);

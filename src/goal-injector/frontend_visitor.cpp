@@ -1,4 +1,5 @@
 #include <goal-injector/frontend_visitor.h>
+#include <fmt/core.h>
 
 namespace GoalInjector {
     bool frontend_visitor::VisitWhileStmt(clang::WhileStmt *expr) {
@@ -34,14 +35,21 @@ namespace GoalInjector {
         }
     }
 
+    std::string frontend_visitor::goal_str() {
+	    return fmt::format("__ESBMC_assert(0, \"{}\");", counter++);
+    }
+    
+    std::string frontend_visitor::goal_block_str() {
+	    return fmt::format("{__ESBMC_assert(0, \"{}\");", counter++);
+    }
     void frontend_visitor::InjectOnCompoundStmt(clang::CompoundStmt *stmt) {
         // TODO: Not sure whether begin or end location is the best
-        rewriter.InsertTextAfter(stmt->getBeginLoc().getLocWithOffset(1), goal_str);
+        rewriter.InsertTextAfter(stmt->getBeginLoc().getLocWithOffset(1), goal_str());
     }
 
     void frontend_visitor::InjectOnNonCompoundStmt(clang::Stmt *stmt) {
         // TODO: Not sure whether begin or end location is the best
-        rewriter.InsertTextAfter(stmt->getBeginLoc(), goal_block_str);
+        rewriter.InsertTextAfter(stmt->getBeginLoc(), goal_block_str());
         rewriter.InsertTextAfter(stmt->getEndLoc().getLocWithOffset(1), "}");
     }
 }

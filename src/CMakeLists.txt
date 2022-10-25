@@ -4,4 +4,4 @@ add_executable(instrumentator main.cpp)
 target_include_directories(instrumentator
         PRIVATE ${CLANG_INCLUDE_DIRS}
         )
-target_link_libraries(instrumentator frontend)
+target_link_libraries(instrumentator frontend clangTooling clangAST clangIndex)

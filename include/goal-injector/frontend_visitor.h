@@ -1,5 +1,4 @@
-#ifndef CINSTRUMENTATION_FRONTEND_VISITOR_H
-#define CINSTRUMENTATION_FRONTEND_VISITOR_H
+#pragma once
 
 #include <clang/AST/RecursiveASTVisitor.h>
 #include <clang/AST/DeclCXX.h>
@@ -51,10 +50,10 @@ namespace GoalInjector {
         void InjectOnNonCompoundStmt(clang::Stmt *stmt);
 
     private:
+	int counter = 0;
         clang::Rewriter &rewriter;
-        const std::string goal_str = "reach_error();";
-        const std::string goal_block_str = "{reach_error();";
+        std::string goal_str();
+        std::string goal_block_str();
 
     };
 }
-#endif //CINSTRUMENTATION_FRONTEND_VISITOR_H
