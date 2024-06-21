@@ -8,6 +8,9 @@ project(CInstrumentation)
 # Configuration                 #
 #################################
 
+# Demand C++17
+set (CMAKE_CXX_STANDARD 17)
+
 # Adds custom modules from ESBMC and default Options
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/scripts/cmake/")
 
