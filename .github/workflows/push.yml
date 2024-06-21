@@ -1,0 +1,10 @@
+name: Early warning on push
+
+on: [push]
+
+jobs:
+  # just run the linux job
+  build-unix:
+    uses: ./.github/workflows/build-unix.yml
+    with:
+      testing: true
