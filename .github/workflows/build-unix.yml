@@ -23,7 +23,7 @@ jobs:
     - name: Configure project
       run: mkdir build && cd build && cmake .. -DBUILD_TESTING=1 -DClang_DIR=/usr/lib/cmake/clang-14 -DLLVM_DIR=/usr/lib/llvm-14/lib/cmake/llvm
     - name: Build project
-      run: make -j4 
+      run: cd build && make -j4 
     - name: Run tests
       if: ${{ inputs.testing == true }}
       run: cd build/unit && ctest -j4 --output-on-failure --progress .
