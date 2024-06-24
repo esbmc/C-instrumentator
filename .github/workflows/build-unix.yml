@@ -19,7 +19,7 @@ jobs:
         sudo add-apt-repository -y "deb http://apt.llvm.org/${UBUNTU_CODENAME}/ llvm-toolchain-${UBUNTU_CODENAME}-16 main" &&
         sudo apt-get update
     - name: Install dependencies
-      run: sudo apt-get install clang llvm clang-tidy  git linux-libc-dev libclang-18-dev libclang-cpp-dev cmake build-essential
+      run: sudo apt-get install clang llvm clang-tidy  git linux-libc-dev libclang-dev libclang-cpp-dev cmake build-essential
     - name: Configure project
       run: mkdir build && cd build && cmake .. -DBUILD_TESTING=1
     - name: Build project
