@@ -50,7 +50,7 @@ namespace GoalInjector {
         void InjectOnNonCompoundStmt(clang::Stmt *stmt);
 
     private:
-	int counter = 0;
+       	int counter = 0;
         clang::Rewriter &rewriter;
         std::string goal_str();
         std::string goal_block_str();

@@ -34,6 +34,7 @@
 # Builds
 cmake-build-*
 build*
-
+.cache
 # Project files
 .idea
+compile_commands.json

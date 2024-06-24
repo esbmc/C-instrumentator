@@ -40,7 +40,7 @@ namespace GoalInjector {
     }
     
     std::string frontend_visitor::goal_block_str() {
-	    return fmt::format("{__ESBMC_assert(0, \"{}\");", counter++);
+	    return fmt::format("{}__ESBMC_assert(0, \"{}\");", "{", counter++);
     }
     void frontend_visitor::InjectOnCompoundStmt(clang::CompoundStmt *stmt) {
         // TODO: Not sure whether begin or end location is the best
