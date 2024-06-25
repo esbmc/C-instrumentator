@@ -29,31 +29,15 @@ namespace BoundedLoopUnroller {
     public:
         explicit frontend_visitor(clang::Rewriter &rewriter) : rewriter(rewriter) {}
 
-        bool VisitWhileStmt(clang::WhileStmt *expr);
-
-        bool VisitIfStmt(clang::IfStmt *expr);
-
         bool VisitForStmt(clang::ForStmt *expr);
 
-        bool VisitFunctionDecl(clang::FunctionDecl *F);
-
-        /*
-         * SwitchCase
-         * dowhile
-         */
+      // TODO: other loops, e.g.: while, do-while, backwards goto
 
     protected:
-        void InjectOnStmt(clang::Stmt *stmt);
-
-        void InjectOnCompoundStmt(clang::CompoundStmt *stmt);
-
-        void InjectOnNonCompoundStmt(clang::Stmt *stmt);
+      void RewriteForLoop(clang::ForStmt *expr, int64_t unfold_number);
 
     private:
        	int counter = 0;
         clang::Rewriter &rewriter;
-        std::string goal_str();
-        std::string goal_block_str();
-
     };
 }
