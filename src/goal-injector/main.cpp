@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main(int argc, char **argv) {
-  if (argc != 2) 
+  if (argc != 3) 
     std::cerr << "./injector <input.c> <output.c>\n";
   const std::ifstream input(argv[1]);
   GoalInjector::RunGoalInjectorA(input, argv[2]);
