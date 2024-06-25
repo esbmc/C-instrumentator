@@ -1,6 +1,19 @@
 # C-instrumentator
 A C instrumentation library
 
+# Building
+
+## Ubuntu
+
+Install dependencies: `sudo apt-get install clang llvm clang-tidy  git linux-libc-dev libclang-dev libclang-cpp-dev cmake build-essential`
+Configure: `mkdir build && cd build && cmake .. -DBUILD_TESTING=1 -DClang_DIR=/usr/lib/cmake/clang-14 -DLLVM_DIR=/usr/lib/llvm-14/lib/cmake/llvm`
+Build: `make -j4`
+
+## macOS
+
+Install dependencies: `brew install llvm@16`
+Configure: `mkdir build && cd build && cmake .. -DBUILD_TESTING=1 -DLLVM_DIR=/opt/homebrew/opt/llvm@14 -DClang_DIR=/opt/homebrew/opt/llvm@14`
+Build: `make -j4`
 
 # Project Structure
 
