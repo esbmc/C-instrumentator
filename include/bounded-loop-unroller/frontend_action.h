@@ -7,7 +7,7 @@
 #include <clang/Rewrite/Core/Rewriter.h>
 #include <clang/Tooling/Tooling.h>
 #include "frontend_consumer.h"
-#include "frontend_action.h"
+
 
 /*
  * This is just the entry point for a Library/Plugin/etc.
@@ -23,8 +23,8 @@ namespace BoundedLoopUnroller {
 
         virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer (
                 clang::CompilerInstance &CI, llvm::StringRef InFile) {
-            rewriter.setSourceMgr(CI.getSourceManager(), CI.getLangOpts());
-            return std::make_unique<frontend_consumer>(rewriter);
+          rewriter.setSourceMgr(CI.getSourceManager(), CI.getLangOpts());          
+          return std::make_unique<frontend_consumer>(rewriter, CI.getSourceManager());
         }
 
         void EndSourceFileAction() override;
