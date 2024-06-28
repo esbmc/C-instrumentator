@@ -23,7 +23,7 @@ namespace BoundedLoopUnroller {
     class frontend_visitor
             : public clang::RecursiveASTVisitor<frontend_visitor> {
     public:
-      explicit frontend_visitor(clang::Rewriter &rewriter, clang::SourceManager &context) : rewriter(rewriter), context(context) {}
+      explicit frontend_visitor(clang::Rewriter &rewriter, clang::SourceManager &sm, clang::ASTContext &context) : rewriter(rewriter), sm(sm), context(context) {}
 
         bool VisitForStmt(clang::ForStmt *expr);
 
@@ -36,8 +36,10 @@ namespace BoundedLoopUnroller {
       std::string get_original_source(const clang::Stmt *const E) const;
 
     private:
+        
        	int counter = 0;
         clang::Rewriter &rewriter;
-        clang::SourceManager &context;      
+        clang::SourceManager &sm;
+      clang::ASTContext &context;      
     };
 }

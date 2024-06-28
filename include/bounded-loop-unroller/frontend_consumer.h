@@ -18,7 +18,7 @@ namespace BoundedLoopUnroller {
 
     class frontend_consumer : public clang::ASTConsumer {
     public:
-      explicit frontend_consumer(clang::Rewriter &rewriter, clang::SourceManager &context) : rewriter(rewriter), Visitor(rewriter,context) {}
+      explicit frontend_consumer(clang::Rewriter &rewriter, clang::SourceManager &sm, clang::ASTContext &context) : rewriter(rewriter), Visitor(rewriter,sm, context) {}
 
         virtual void HandleTranslationUnit(clang::ASTContext &Context) {
             Visitor.TraverseAST(Context);

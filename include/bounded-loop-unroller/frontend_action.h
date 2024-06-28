@@ -24,7 +24,7 @@ namespace BoundedLoopUnroller {
         virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer (
                 clang::CompilerInstance &CI, llvm::StringRef InFile) {
           rewriter.setSourceMgr(CI.getSourceManager(), CI.getLangOpts());          
-          return std::make_unique<frontend_consumer>(rewriter, CI.getSourceManager());
+          return std::make_unique<frontend_consumer>(rewriter, CI.getSourceManager(), CI.getASTContext());
         }
 
         void EndSourceFileAction() override;

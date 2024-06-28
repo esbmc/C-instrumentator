@@ -8,7 +8,6 @@ project(CInstrumentation)
 # Configuration                 #
 #################################
 
-# Demand C++17
 set (CMAKE_CXX_STANDARD 20)
 
 # Adds custom modules from ESBMC and default Options
