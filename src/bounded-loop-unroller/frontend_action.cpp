@@ -22,8 +22,8 @@ namespace {
 
   bool compare_files(const std::string_view& filename1, const std::string_view& filename2)
   {
-    std::ifstream file1(filename1);
-    std::ifstream file2(filename2);
+    std::ifstream file1(filename1, std::ios::in);
+    std::ifstream file2(filename2, std::ios::in);
 
     std::istreambuf_iterator<char> begin1(file1);
     std::istreambuf_iterator<char> begin2(file2);
