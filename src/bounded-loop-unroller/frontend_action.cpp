@@ -69,7 +69,7 @@ namespace BoundedLoopUnroller {
 
   void Run(const std::string_view &arg1, const std::string_view &arg2) {
       
-    const std::ifstream input(arg1);
+    const std::ifstream input(arg1.data());
 
     const char *tmp1 = "/tmp/_unrolled1.c";
     const char *tmp2 = "/tmp/_unrolled2.c";
