@@ -87,7 +87,7 @@ int main() {__ESBMC_assert(0, "0");
 
 I want to keep the dependencies at a minimum. So far, the required dependencies are:
 
-- LLVM/Clang > 11
+- LLVM/Clang >= 14
 - fmt
 - clang-format
 
