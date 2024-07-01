@@ -110,9 +110,11 @@ namespace BoundedLoopUnroller {
       if (op_cast && condition_var->getDecl() == op_cast && op_cast->hasInit()) {
         init_var_check = true;
         if (const clang::IntegerLiteral *const value_cast =
-            llvm::dyn_cast<clang::IntegerLiteral>(op_cast->getInit())) {
+            llvm::dyn_cast<clang::IntegerLiteral>(op_cast->getInit()->IgnoreCasts())) {
           cond_init_value = value_cast->getValue().getSExtValue();
           cond_end_value = condition_limit->getValue().getSExtValue();
+        } else {
+          op_cast->getInit()->IgnoreCasts()->dumpColor();
         }
       }
     }    
