@@ -1,13 +1,5 @@
-#include <__format/format_functions.h>
 #include <bounded-loop-unroller/bounded-loop-unroller.h>
-#include <cstdlib>
-#include <fstream>
 #include <iostream>
-
-#include <algorithm>
-#include <iterator>
-#include <string>
-
 
 int main(int argc, char **argv) {
   if (argc != 3) {

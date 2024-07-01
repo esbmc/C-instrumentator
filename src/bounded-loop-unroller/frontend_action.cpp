@@ -3,6 +3,7 @@
 #include <bounded-loop-unroller/bounded-loop-unroller.h>
 
 #include <iostream>
+#include <format>
 namespace {
   
   template<typename InputIterator1, typename InputIterator2>
