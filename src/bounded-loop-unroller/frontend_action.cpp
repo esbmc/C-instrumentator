@@ -3,7 +3,7 @@
 #include <bounded-loop-unroller/bounded-loop-unroller.h>
 
 #include <iostream>
-#include <format>
+#include <fmt/core.h>
 namespace {
   
   template<typename InputIterator1, typename InputIterator2>
@@ -81,7 +81,7 @@ namespace BoundedLoopUnroller {
     clang_format << "InsertBraces: True\nBasedOnStyle: LLVM\n";
     clang_format.close();
 
-    system(std::format("clang-format -style=file -i {}", tmp1).c_str());
+    system(fmt::format("clang-format -style=file -i {}", tmp1).c_str());
 
     size_t counter = 0;
     while (1) {
@@ -94,7 +94,7 @@ namespace BoundedLoopUnroller {
       create_copy(tmp2, tmp1);
     }
 
-    system(std::format("clang-format -i {}", tmp2).c_str());
+    system(fmt::format("clang-format -i {}", tmp2).c_str());
     create_copy(tmp2, arg2);
 
     
