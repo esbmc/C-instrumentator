@@ -20,10 +20,10 @@ namespace {
     return (first1 == last1) && (first2 == last2);
   }
 
-  bool compare_files(const std::string_view& filename1, const std::string_view& filename2)
+  bool compare_files(const std::string_view filename1, const std::string_view filename2)
   {
-    std::ifstream file1(filename1, std::ios::in);
-    std::ifstream file2(filename2, std::ios::in);
+    std::ifstream file1(filename1.data());
+    std::ifstream file2(filename2.data());
 
     std::istreambuf_iterator<char> begin1(file1);
     std::istreambuf_iterator<char> begin2(file2);
@@ -33,10 +33,10 @@ namespace {
     return range_equal(begin1, end, begin2, end);
   }
 
-  void create_copy(const std::string_view &filename1,
-                   const std::string_view &filename2) {
-    std::ifstream src(filename1, std::ios::binary);
-    std::ofstream dst(filename2, std::ios::binary);
+  void create_copy(const std::string_view filename1,
+                   const std::string_view filename2) {
+    std::ifstream src(filename1.data(), std::ios::binary);
+    std::ofstream dst(filename2.data(), std::ios::binary);
 
     dst << src.rdbuf();
   }
