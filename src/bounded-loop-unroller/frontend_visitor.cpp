@@ -222,49 +222,4 @@ namespace BoundedLoopUnroller {
     rewriter.ReplaceText(expr->getSourceRange(), oss.str());
     
   }
-  
-
-
-#if 0
-  void frontend_visitor::RewriteForLoop(clang::ForStmt *expr, int64_t unfold_number, const std::string_view &init, const std::string_view &increment) {
-    const clang::Stmt *const body = expr->getBody();
-
-
-    // Just remove the loop in case of negative or 0;
-    if (0 >= unfold_number || body->children().empty()) {
-      rewriter.RemoveText(expr->getSourceRange());
-      return;
-    }
-    
-
-    rewriter.InsertTextBefore(
-                              expr->getBeginLoc(),
-                              fmt::format(
-                                          "\n// LOOP {} START. ITERATIONS: {}. INIT: {};. INCR: {};.\n",
-                                          counter, unfold_number, init, increment));
-
-
-    if (llvm::isa<clang::CompoundStmt>(body)) {
-      rewriter.InsertTextAfter(
-                               body->child_begin()->getBeginLoc(),
-                               fmt::format("\n// LOOP {} BODY START\n", counter));
-    } else
-      rewriter.InsertTextBefore(
-                                body->getBeginLoc(),
-                                fmt::format("\n// LOOP {} BODY START\n", counter));
-
-
-    if (llvm::isa<clang::CompoundStmt>(body)) {
-      rewriter.InsertTextBefore(
-                                expr->getEndLoc(), fmt::format("\n// LOOP {} BODY END\n", counter));
-      rewriter.InsertTextAfterToken(expr->getEndLoc(),
-                                    fmt::format("\n// LOOP {} END\n", counter));
-    } else {
-      rewriter.InsertTextAfterToken(expr->getEndLoc().getLocWithOffset(2),
-                                    fmt::format("\n// LOOP {} BODY END\n// LOOP {} END\n", counter, counter));
-    }
-    
-    counter++;
-  }
-#endif
 }
