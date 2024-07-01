@@ -12,6 +12,18 @@
 
 namespace BoundedLoopUnroller {
 
+const clang::IntegerLiteral *
+get_init_value_from_decl(const clang::VarDecl *const decl) {
+  if (!decl || !decl->hasInit())
+    return nullptr;
+
+  if (const clang::IntegerLiteral *const value_cast =
+      llvm::dyn_cast<clang::IntegerLiteral>(decl->getInit()->IgnoreCasts())) 
+    return value_cast;
+
+  return nullptr;  
+}
+
   std::string frontend_visitor::get_original_source(const clang::Stmt *const E) const {
     const char *e_start = sm.getCharacterData(E->getBeginLoc()),
       *e_end = sm.getCharacterData(E->getEndLoc());
@@ -93,9 +105,29 @@ namespace BoundedLoopUnroller {
     assert(bin_op);
 
     const clang::DeclRefExpr *const condition_var =
-      llvm::dyn_cast<clang::DeclRefExpr>(bin_op->getLHS()->IgnoreCasts());
-    const clang::IntegerLiteral *const condition_limit =
-      llvm::dyn_cast<clang::IntegerLiteral>(bin_op->getRHS()->IgnoreCasts());
+        llvm::dyn_cast<clang::DeclRefExpr>(bin_op->getLHS()->IgnoreCasts());
+
+    const clang::IntegerLiteral * condition_limit;
+      
+
+    if (const clang::IntegerLiteral *const value_cast =
+        llvm::dyn_cast<clang::IntegerLiteral>(bin_op->getRHS()->IgnoreCasts())) {
+      condition_limit = value_cast;
+    } else if (const clang::DeclRefExpr *const value_cast =
+                   llvm::dyn_cast<clang::DeclRefExpr>(
+                       bin_op->getRHS()->IgnoreCasts())) {
+      if (!value_cast->getType().isConstant(context))
+        return CONTINUE_SEARCH;
+      const clang::VarDecl *const decl =
+          llvm::dyn_cast<clang::VarDecl>(value_cast->getDecl());
+      condition_limit = get_init_value_from_decl(decl);
+    } else
+      return CONTINUE_SEARCH;
+
+
+
+    
+
 
 
     const std::array SUPPORTED_OP{clang::BinaryOperator::Opcode::BO_GE, clang::BinaryOperator::Opcode::BO_GT, clang::BinaryOperator::Opcode::BO_LE, clang::BinaryOperator::Opcode::BO_LT, };

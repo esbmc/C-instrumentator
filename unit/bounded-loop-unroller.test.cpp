@@ -381,3 +381,37 @@ int main() {
     REQUIRE(actual == expected);
 }
 
+TEST_CASE("One-line <= For-Loops are detected with const condition", "[for]") {
+    auto initial = R"(
+int main() { const int N = 3; int a; for (int i = 0; i <= N; i++) a++; return 0; })";
+    auto expected = R"(
+int main() {
+  const int N = 3;
+  int a;
+  int i = 0;
+  {
+    a++;
+
+    i++;
+  }
+  {
+    a++;
+
+    i++;
+  }
+  {
+    a++;
+
+    i++;
+  }
+  {
+    a++;
+
+    i++;
+  }
+
+  return 0;
+})";
+    auto actual = run_test(initial);
+    REQUIRE(actual == expected);
+}
