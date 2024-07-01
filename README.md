@@ -32,7 +32,7 @@ int main() {
 }
 ```
 
-To run, just invoke `./loop-unroller input.c output.c`. This requires `clang-format` to be on path.
+To run, just invoke `./loop-unroller input.c output.c`. This requires `clang-format` to be on path and it needs to be >= 15.
 
 # Goal Injector
 
