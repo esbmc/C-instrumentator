@@ -9,9 +9,6 @@
 #include <string>
 
 
-#define CLANG_FORMAT
-
-
 template<typename InputIterator1, typename InputIterator2>
 bool
 range_equal(InputIterator1 first1, InputIterator1 last1,
@@ -60,13 +57,12 @@ int main(int argc, char **argv) {
   create_copy(argv[1], tmp1);
   
   // Lets normalize things!
+  std::ofstream clang_format("/tmp/.clang-format");
+  clang_format << "InsertBraces: True\n";
+  clang_format.close();
 
-#ifdef CLANG_FORMAT
-  create_copy(".clang-format", "/tmp/.clang-format");
   system(std::format("clang-format -style=file -i {}", tmp1).c_str());
-#endif
 
-  //  return 0;
   size_t counter = 0;
   while (1) {
         std::cout << "Running iteration " << counter++ << "\n";
@@ -80,9 +76,7 @@ int main(int argc, char **argv) {
 
   create_copy(tmp2, argv[2]);
 
-#ifdef CLANG_FORMAT
   system(std::format("clang-format -i {}", argv[2]).c_str());
-#endif
   std::cout << "Done\n";
   return 0;
 }
